@@ -3,7 +3,8 @@
     <div id="container">
       <div id="heading">
         <h2>HfG <br> Mensakarte</h2>
-      </div>
+      </div> 
+      {{loadedData.data.message}}
       <dropdown></dropdown>
     <list></list>
     </div>
@@ -12,7 +13,7 @@
 <script>
 import List from '../components/List.vue'
 import Dropdown from '../components/Dropdown.vue'
-
+import axios from 'axios'
 
 export default {
   name: 'Plan',
@@ -22,6 +23,20 @@ export default {
   },
   props: {
     msg: String
+  },
+  data: function() {
+    return {
+      loadedData: 'no data loaded',
+    }
+  },
+  mounted() {
+    axios.get("")
+    .then(response => {
+      this.loadedData = response;
+    })
+    .catch(err => {
+      console.log(err);
+    })
   }
 }
 </script>
