@@ -4,13 +4,13 @@
       <div id="heading">
         <h2>HfG <br> Mensakarte</h2>
       </div> 
-      {{loadedData.data.message}}
       <dropdown></dropdown>
     <list></list>
+    {{loadedData}}
     </div>
 </div>
 </template>
-<script>
+<script>  
 import List from '../components/List.vue'
 import Dropdown from '../components/Dropdown.vue'
 import axios from 'axios'
@@ -24,19 +24,19 @@ export default {
   props: {
     msg: String
   },
-  data: function() {
+    data: function () {
     return {
-      loadedData: 'no data loaded',
+      loadedData: undefined,
     }
   },
   mounted() {
-    axios.get("")
-    .then(response => {
-      this.loadedData = response;
-    })
-    .catch(err => {
-      console.log(err);
-    })
+    axios.get("http://localhost:3000/api/getData")
+      .then(response => {
+        this.loadedData = response.data;
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>
