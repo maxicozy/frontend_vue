@@ -9,6 +9,7 @@
     </tr>
     <tr>
       <th id="leftRow">Suppe</th>
+      <th v-for="meal in loadedData.name" :key="meal.id">{{meal}}</th>
     </tr>
     <tr>
       <th id="leftRow">Hauptgericht 1</th>
@@ -56,8 +57,8 @@
 export default {
   name: 'List',
   props: {
-    data: String,
-  }
+    tableData: Array,
+  },
 }
 </script>
 

@@ -1,10 +1,10 @@
 <template>
   <select name="wochentag" id="select">
-    <option>Montag</option>
-    <option>Dienstag</option>
-    <option>Mittwoch</option>
-    <option>Donnerstag</option>
-    <option>Freitag</option>
+    <option v-if="days.includes('Mo')">Montag</option>
+    <option v-if="days.includes('Di')">Dienstag</option>
+    <option v-if="days.includes('Mi')">Mittwoch</option>
+    <option v-if="days.includes('Do')">Donnerstag</option>
+    <option v-if="days.includes('Fr')">Freitag</option>
   </select>
 </template>
 
@@ -12,7 +12,9 @@
 export default {
   name: 'Dropdown',
   props: {
-    data: String
+    days: {
+      type: Array
+    }
   }
 }
 </script>
@@ -21,6 +23,7 @@ export default {
 <style scoped>
 #select {
   position: absolute;
+  width: 160px;
   font-family: inherit;
   font-size: 24px; 
   padding: 5px;

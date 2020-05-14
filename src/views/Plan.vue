@@ -4,9 +4,8 @@
       <div id="heading">
         <h2>HfG <br> Mensakarte</h2>
       </div> 
-      <dropdown></dropdown>
-    <list></list>
-    {{loadedData}}
+      <dropdown :days="days" />
+      <list :tableData="loadedData" />
     </div>
 </div>
 </template>
@@ -27,12 +26,16 @@ export default {
     data: function () {
     return {
       loadedData: undefined,
+      days: undefined
     }
   },
   mounted() {
     axios.get("http://localhost:3000/api/getData")
       .then(response => {
         this.loadedData = response.data;
+        this.days = this.loadedData.map((essen) => essen.day);
+        this.days = this.days.filter((a, b) => this.days.indexOf(a) === b);
+        console.log(this.days);
       })
       .catch(err => {
         console.log(err)
@@ -67,7 +70,7 @@ export default {
   font-variant: normal; 
   font-weight: 700; 
   line-height: 36.4px; 
-  height: 115vh;
+  height: 120vh;
   width: 90vw;
   margin: auto;
   padding-left: 40px;
