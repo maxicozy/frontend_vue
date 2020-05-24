@@ -1,5 +1,5 @@
 <template>
- <table id="table">
+  <table id="table">
     <tr>
       <th id="leftRow">Kategorie</th>
       <th id="headerRow">Bezeichnung</th>
@@ -7,59 +7,22 @@
       <th id="headerRow">Labels</th>
       <th id="headerRow">Preis</th>
     </tr>
-    <tr>
-      <th id="leftRow">Suppe</th>
-      <th v-for="meal in loadedData.name" :key="meal.id">{{meal}}</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Hauptgericht 1</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Hauptgericht 2</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Hauptgericht 3</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Hauptgericht 4</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Beilage 1</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Beilage 2</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Beilage 3</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Beilage 4</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Beilage 5</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Beilage 6</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Nachtisch 1</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Nachtisch 2</th>
-    </tr>
-    <tr>
-      <th id="leftRow">Nachtisch 3</th>
-    </tr>
+
+    <meal v-for="meal in tableData" :meal="meal" :key="meal.id" />
   </table>
 </template>
 
 <script>
+import Meal from "../components/Meal.vue";
 export default {
-  name: 'List',
-  props: {
-    tableData: Array,
+  name: "List",
+  components: {
+    Meal,
   },
-}
+  props: {
+    tableData: Array
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -69,7 +32,7 @@ export default {
   margin: auto;
   margin-top: 18vh;
   text-align: left;
-  padding: 5px, 5px, 5px, 5px;
+  padding: 5px;
   border: 1px black solid;
 }
 
@@ -87,6 +50,15 @@ th {
   font-family: inherit;
   font-size: 24px;
   font-weight: bold;
+  padding-left: 10px;
+}
+
+td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: normal;
   padding-left: 10px;
 }
 </style>
