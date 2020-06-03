@@ -2,25 +2,28 @@
   <div id="body">
     <div id="container">
       <div id="heading">
-        <h2>
+        <div id="title">
           HfG
-          <br />Mensakarte
-        </h2>
+          <span id="lead">Mensakarte</span>
+        </div>
       </div>
-      <dropdown v-on:select="selectDay($event)" :days="days" :selectedDay="selectedDay" />
-      <list :tableData="loadedData.filter(essen => essen.day === this.selectedDay)" />
+      <div class="datepicker">
+        <label for="example-datepicker"></label>
+        <b-form-datepicker value-as-date id="example-datepicker" v-model="selectedDay" class="mb-2"></b-form-datepicker>
+      </div>
     </div>
+    <list
+      :tableData="loadedData.filter(essen => this.selectedDay && (this.day(essen.day) === this.selectedDay.getDay()))"
+    />
   </div>
 </template>
 <script>
 import List from "../components/List.vue";
-import Dropdown from "../components/Dropdown.vue";
 import axios from "axios";
 
 export default {
   name: "Plan",
   components: {
-    Dropdown,
     List
   },
   props: {
@@ -37,6 +40,9 @@ export default {
     selectDay: function(day) {
       this.selectedDay = day;
     },
+    day(string) {
+      return ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"].indexOf(string);
+    }
   },
   mounted() {
     axios
@@ -56,35 +62,33 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#heading {
-  float: left;
-  height: 50px;
-}
-
-#body {
-  padding: 20px;
-  background-color: beige;
-  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-  font-size: 28px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 36.4px;
+.datepicker {
+  width: 25vw;
+  margin: auto;
 }
 
 #container {
-  background-color: white;
-  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
-  font-size: 28px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 700;
-  line-height: 36.4px;
-  height: 120vh;
-  width: 90vw;
-  margin: auto;
-  padding-left: 40px;
-  padding-top: 15px;
-  padding-right: 40px;
+  background-color: rgb(211, 211, 211);
+  margin: 0 calc(69px / 0.3);
+  border-radius: 3px 3px 15px 15px;
+  padding-top: 69px;
+  padding-bottom: calc(69px * 1);
+}
+
+p {
+  padding: 0;
+}
+
+#title {
+  color: white;
+  text-align: center;
+  font-size: 80pt;
+  line-height: 80pt;
+  margin-bottom: 10px;
+}
+
+#lead {
+  font-size: 40pt;
+  line-height: 40pt;
 }
 </style>

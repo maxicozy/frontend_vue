@@ -1,17 +1,27 @@
 <template>
-  <tr>
-    <td>{{meal.category}}</td>
-    <td>{{meal.name}}</td>
-    <td>
-      <p v-for="content in meal.contentInformation" :key="content">{{content}}</p>
-    </td>
-    <td>{{meal.labels.split(',').join(', ')}}</td>
-    <td>
-      <p v-for="k in Object.keys(meal.cost)" :key="k">{{costCategories[k] }}: {{ meal.cost[k]}}</p>
-    </td>
-  </tr>
+  <div>
+    <h4>
+      {{meal.category}}
+      <span class="buttons h4">
+        <button v-on:click="postLike(meal.id)">
+          <b-icon-hand-thumbs-up v-if="liked" variant="success" />
+          <b-icon-hand-thumbs-up v-else />
+        </button>
+        <button v-on:click="postDislike(meal.id)">
+          <b-icon-hand-thumbs-down v-if="disliked" variant="danger" />
+          <b-icon-hand-thumbs-down v-else />
+        </button>
+      </span>
+    </h4>
+    <h3>{{meal.name}}</h3>
+    <div class="td" v-for="content in meal.contentInformation" :key="content">{{content}}</div>
+    <p />
+    <h5>{{meal.cost.students}} €</h5>
+  </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   name: "Meal",
   data() {
@@ -20,8 +30,22 @@ export default {
         employees: "Angestellte",
         guests: "Gäste",
         students: "Studenten"
-      }
+      },
+      liked: false,
+      disliked: false
     };
+  },
+  methods: {
+    postLike(id) {
+      this.liked = !this.liked;
+      axios.post(`http://localhost:3000/api/like/${id}`)
+      this.disliked = this.disliked && !this.liked;
+
+    },
+    postDislike() {
+      this.disliked = !this.disliked;
+      this.liked = this.liked && !this.disliked;
+    }
   },
   props: {
     meal: Object
@@ -29,12 +53,25 @@ export default {
 };
 </script>
 <style scoped>
-td {
-  padding-top: 10px;
-  padding-bottom: 10px;
+button {
+  background-color: white;
+  box-shadow: unset;
+  border: unset;
+}
+
+* {
+  text-align: left;
+}
+
+.buttons {
+  float: right;
+}
+
+.td {
+  display: inline-block;
   font-family: inherit;
-  font-size: 20px;
+  font-size: 8pt;
   font-weight: normal;
-  padding-left: 10px;
+  margin-right: 10px;
 }
 </style>
